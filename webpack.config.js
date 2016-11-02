@@ -5,10 +5,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
-    entry: [path.resolve(ROOT_PATH, 'app/main.jsx')],
+    entry: [path.resolve(ROOT_PATH, 'app/index.js')],
 
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js',]
     },
 
     output: {
@@ -25,11 +25,11 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
+                test: /\.js?$/,
                 exclude: /node_modules/,
                 loader: "babel",
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015']
                 }
             },
 
