@@ -18,14 +18,14 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'React ES2015'
+            title: 'Neighborhood map'
         })
     ],
 
     module: {
         loaders: [
             {
-                test: /\.js?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel",
                 query: {
