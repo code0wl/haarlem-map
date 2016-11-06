@@ -1,9 +1,12 @@
-import ko from 'knockout';
-
 export default class GoogleMaps {
     constructor() {
-        this.gm = {
-            map: 'graphic'
-        };
+        this.render
+    }
+
+    get render() {
+        this.map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8
+        });
     }
 } 

@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
-    entry: [path.resolve(ROOT_PATH, 'app/index.js')],
+    entry: ['whatwg-fetch', path.resolve(ROOT_PATH, 'app/index.js')],
 
     resolve: {
         extensions: ['', '.js',]
@@ -33,7 +33,6 @@ module.exports = {
                     presets: ['es2015']
                 }
             },
-
             {
                 test: /\.css$/,
                 loaders: ['style', 'css']

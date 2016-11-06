@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <style>
+        #map{
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            overflow: auto;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
-    <section>
-        <nav class="navigation">
-            <span data-bind="text: menu"></span>
-        </nav> 
+
+    <section class="maps">
+        <div id="map"></div>     
     </section>
 
     <section>
-        <div class="maps">
-            <span data-bind="text: map"></span>
-        </div> 
+        <nav class="navigation">
+            <span data-bind="text: navigation"></span>
+        </nav> 
     </section>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPsTfD7kIQaXRZtWqTPL1kPXjrTMQrgLI"></script>
 </body>
 </html>
