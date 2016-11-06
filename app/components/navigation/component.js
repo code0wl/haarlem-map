@@ -1,15 +1,8 @@
 export default class Navigation {
 
     constructor() {
-        this.navigation = ['menu1', 'menu2', 'menu3'];
+        this.navigation = {
+            menu: 'navigation'
+        };
     }
-
-    buildNavigation() {
-        
-    }
-
-    get navigationList() {
-        return this.navigation;
-    }
-
 } 

@@ -18,7 +18,8 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Neighborhood map'
+            title: 'Neighborhood map',
+            template: './app/index.html'
         })
     ],
 
