@@ -7,12 +7,17 @@ class App {
         this.nav = new Navigation();
         this.map = new GoogleMaps();
         this.navigation = this.navItems;
+        this.addWatchers();
+    }
+
+    addWatchers() {
+        ko.observable(this.map);
+        ko.observable(this.nav);
     }
 
     get navItems() {
         return this.nav.navigation.menu;
     }
-
 }
 
 ko.applyBindings(new App());

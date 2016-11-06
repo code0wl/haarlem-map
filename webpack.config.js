@@ -5,10 +5,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
-    entry: ['whatwg-fetch', path.resolve(ROOT_PATH, 'app/index.js')],
+    entry: [path.resolve(ROOT_PATH, 'app/index.js')],
 
     resolve: {
-        extensions: ['', '.js',]
+        extensions: ['', '.js']
     },
 
     output: {
@@ -34,8 +34,8 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loaders: ['style', 'css']
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'sass']
             }
         ]
     }
