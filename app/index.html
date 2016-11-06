@@ -6,15 +6,17 @@
 </head>
 <body>
 
-    <section class="maps">
-        <div id="map"></div>     
+    <section>
+        <nav class="navigation" data-bind="foreach: nav.navigation">
+            <a data-bind="text: label, attr: { href: link }"></a>
+        </nav>
+        <button data-bind="click: changeZoom">Handle click</button> 
     </section>
 
-    <section>
-        <nav class="navigation">
-            <span data-bind="text: navigation"></span>
-        </nav> 
+    <section class="maps">
+        <div id="map" data-bind="with: map"></div>     
     </section>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPsTfD7kIQaXRZtWqTPL1kPXjrTMQrgLI"></script>
 </body>
 </html>

@@ -8,19 +8,14 @@ class App {
     constructor() {
         this.nav = new Navigation();
         this.map = new GoogleMaps();
-        this.navigation = this.navItems;
-        this.addWatchers();
+
+        console.log(this.nav);
     }
 
-    addWatchers() {
-        ko.observable(this.map);
-        ko.observable(this.nav);
-    }
-
-    get navItems() {
-        return this.nav.navigation.menu;
+    changeZoom() {
+        this.map.map.zoom = 18;
+        console.log(this.map.map);
     }
 }
 
 ko.applyBindings(new App());
-    
