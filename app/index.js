@@ -1,20 +1,18 @@
 import ko from 'knockout';
-import Navigation from './components/navigation/component';
+import Navigation from './components/navigation-bar/component';
 import GoogleMaps from './components/google-maps/component';
-
+import Favorite from './components/favorite-bar/component';
 import './app.scss';
 
 class App {
     constructor() {
         this.nav = new Navigation();
         this.map = new GoogleMaps();
-
-        console.log(this.nav);
+        this.fav = new Favorite();
     }
 
     changeZoom() {
-        this.map.map.zoom = 18;
-        console.log(this.map.map);
+        this.map.map.setZoom(17);
     }
 }
 
