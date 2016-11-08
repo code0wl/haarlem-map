@@ -1,10 +1,10 @@
 .navigation {
     position: absolute;
     top: 0;
-    bottom: 0;
     overflow: auto;
     background: white;
     padding: 2rem;
+    bottom: 0;
     box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, .1);
     a {
         display: block;

@@ -1,9 +1,19 @@
-.favorite-bar {
+.favorite-aside {
     background: darkcyan;
     color: white;
     position: fixed;
     right: 0;
     bottom: 0;
     padding: 3rem;
+    overflow: auto;
     top: 0;
+}
+
+.favorite-bar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        padding-bottom: 2rem;
+    }
 }

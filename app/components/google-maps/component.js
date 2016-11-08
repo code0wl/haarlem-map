@@ -2,7 +2,7 @@ import './component.scss';
 
 export default class GoogleMaps {
     constructor() {
-        const haarlem = new google.maps.LatLng(52.3874, 4.646219);
+        const haarlem = new google.maps.LatLng(52.387388, 4.646219);
 
         this.mapSettings = {
             center: haarlem,
@@ -11,42 +11,41 @@ export default class GoogleMaps {
 
         this.request = {
             location: haarlem,
-            radius: '500',
-            types: ['store', 'bar', 'restaurant', 'sport', 'gym']
+            radius: '5000',
+            types: ['gym', 'bowling_alley']
         };
 
+        this.placesList = document.querySelector('.favorite-bar');
+        this.listFragment = document.createDocumentFragment();
 
         this.render();
     }
 
-    createMarkers(places) {
+    createMarkers(place) {
         const bounds = new google.maps.LatLngBounds();
-        let placesList = document.getElementById('places');
+        const list = document.createElement('li');
+        const image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
 
-        console.log(places);
-
-        places.map(place => {
-            const image = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
-            const marker = new google.maps.Marker({
-                map: this.map,
-                icon: image,
-                title: place.name,
-                position: place.geometry.location
-            });
-
-            placesList.innerHTML += '<li>' + place.name + '</li>';
-            bounds.extend(place.geometry.location);
+        const marker = new google.maps.Marker({
+            map: this.map,
+            icon: image,
+            title: place.name,
+            position: place.geometry.location
         });
 
-        this.map.fitBounds(bounds);
+        list.textContent = place.name;
+        this.listFragment.appendChild(list);
+        this.placesList.appendChild(this.listFragment);
 
+        bounds.extend(place.geometry.location);
+
+        this.map.fitBounds(bounds);
     }
 
     render() {
