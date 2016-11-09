@@ -1,22 +1,29 @@
-import './component.scss';
+import ko from 'knockout';
 import { GoogleMapService } from './map-service';
 import FavoriteBar from '../favorite-bar/component';
+import './component.scss';
 
 export default class GoogleMaps {
     constructor() {
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
         this.bar = new FavoriteBar();
+
         this.mapSettings = {
             center: haarlem,
             zoom: 12
         }
+
+        this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
+        this.service = new google.maps.places.PlacesService(this.map);
 
         this.request = {
             location: haarlem,
             radius: '5000',
             types: ['gym', 'bowling_alley']
         };
+
         this.render();
+
     }
 
     createMarkers(place) {
@@ -37,29 +44,26 @@ export default class GoogleMaps {
         });
 
         GoogleMapService.saveLocation(place);
-
         bounds.extend(place.geometry.location);
-
         this.map.fitBounds(bounds);
+    }
 
+    notifyReady() {
+        console.log(GoogleMapService.locations);
     }
 
     render() {
         const that = this;
-        this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
-        this.service = new google.maps.places.PlacesService(this.map);
-        this.service.nearbySearch(this.request, places);
-
-        function places(results, status) {
+        that.service.nearbySearch(that.request, getPlaces);
+        function getPlaces(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 results.map(result => {
                     return that.createMarkers(result);
                 });
+                GoogleMapService.locations = results;
+                that.notifyReady();
             }
         }
-        this.bar.locationCollection = GoogleMapService.locations;
-        console.log(this.bar);
-        return this.service;
-    }
 
-} 
+    }
+}
