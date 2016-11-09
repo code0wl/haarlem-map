@@ -1,13 +1,11 @@
 import './component.scss';
+import { GoogleMapService } from './map-service';
 import FavoriteBar from '../favorite-bar/component';
-import MapService from './map-service';
 
 export default class GoogleMaps {
     constructor() {
-        this.service = new MapService();
-        this.bar = new FavoriteBar();
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
-        
+        this.bar = new FavoriteBar();
         this.mapSettings = {
             center: haarlem,
             zoom: 12
@@ -18,7 +16,6 @@ export default class GoogleMaps {
             radius: '5000',
             types: ['gym', 'bowling_alley']
         };
-
         this.render();
     }
 
@@ -39,13 +36,13 @@ export default class GoogleMaps {
             position: place.geometry.location
         });
 
-        this.bar.createFavoritePlace(place);
+        GoogleMapService.saveLocation(place);
 
         bounds.extend(place.geometry.location);
 
         this.map.fitBounds(bounds);
-    }
 
+    }
 
     render() {
         const that = this;
@@ -60,7 +57,8 @@ export default class GoogleMaps {
                 });
             }
         }
-
+        this.bar.locationCollection = GoogleMapService.locations;
+        console.log(this.bar);
         return this.service;
     }
 

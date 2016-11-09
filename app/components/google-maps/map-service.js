@@ -1,11 +1,6 @@
-export default class MapService {
-
-    constructor() {
-
+export const GoogleMapService = {
+    locations: [],
+    saveLocation(location) {
+        this.locations.push(location);
     }
-
-    static database () {
-        
-    }
-
 }
