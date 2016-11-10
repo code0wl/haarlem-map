@@ -24,17 +24,8 @@ export default class GoogleMaps {
     createMarkers(place) {
         const bounds = new google.maps.LatLngBounds();
 
-        const image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-        };
-
         const marker = new google.maps.Marker({
             map: this.map,
-            icon: image,
             title: place.name,
             position: place.geometry.location
         });

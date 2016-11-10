@@ -4,13 +4,14 @@
     position: fixed;
     right: 0;
     bottom: 0;
-    padding: 3rem;
     overflow: auto;
     top: 0;
     color: #999;
     .location {
+        padding: 1rem;
         transition: all .1s ease-in-out;
         &:hover {
+            background: rgba(255,255,255,.1);
             color: white;
             cursor: pointer;
             transform: scale(1.02);
@@ -22,19 +23,14 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    li {
-        padding-bottom: 2rem;
-    }
     .fa {
         padding: 0 .5rem 0 0;
     }
 }
 
 .logo {
-    padding: 1rem 3rem;
+    padding: 0 3rem;
     font-size: 1.3rem;
-    margin: -3rem -3rem 2rem -3rem;
     font-weight: normal;
-    border-bottom: 1px solid;
     border-color: rgba(255, 255, 255, .1);
 }
