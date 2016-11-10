@@ -52,6 +52,7 @@ export default class GoogleMaps {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 results.map(result => that.createMarkers(result));
                 GoogleMapService.locations = results;
+                console.log(GoogleMapService.locations);
             }
         }
     }

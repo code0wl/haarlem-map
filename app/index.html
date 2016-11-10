@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>My favourite locations</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
 </head>
 <body>
     <main>
+        
         <section>
             <nav class="navigation" data-bind="foreach: nav.navigation">
                 <a data-bind="text: label, attr: { href: link }"></a>
@@ -16,12 +17,18 @@
         <section class="maps">
             <div id="map"></div>     
         </section>
+        
     </main>
     
     <aside class="favorite-aside">
+        <h1 class="logo">My Locations</h1>
         <section>
             <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
-                 <li data-bind="text: name"></li>
+                 <li>
+                     <span class="fa fa-star"></span>
+                     <span data-bind="text: name"></span>
+                 </li>
+
             </ul>
         </section>
     </aside>

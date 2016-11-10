@@ -1,7 +1,7 @@
 import ko from 'knockout';
 
 export const GoogleMapService = {
-    locations: ko.observableArray([{name: 'hi from service'}]),
+    locations: ko.observableArray([]),
     saveLocation(location) {
         this.locations.push(location);
     }
