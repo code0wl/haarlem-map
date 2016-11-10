@@ -1,12 +1,9 @@
-import ko from 'knockout';
 import { GoogleMapService } from './map-service';
-import FavoriteBar from '../favorite-bar/component';
 import './component.scss';
 
 export default class GoogleMaps {
     constructor() {
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
-        this.bar = new FavoriteBar();
 
         this.mapSettings = {
             center: haarlem,
@@ -21,13 +18,12 @@ export default class GoogleMaps {
             radius: '5000',
             types: ['gym', 'bowling_alley']
         };
-
         this.render();
-
     }
 
     createMarkers(place) {
         const bounds = new google.maps.LatLngBounds();
+
         const image = {
             url: place.icon,
             size: new google.maps.Size(71, 71),
@@ -48,22 +44,15 @@ export default class GoogleMaps {
         this.map.fitBounds(bounds);
     }
 
-    notifyReady() {
-        console.log(GoogleMapService.locations);
-    }
-
     render() {
         const that = this;
-        that.service.nearbySearch(that.request, getPlaces);
+        this.service.nearbySearch(this.request, getPlaces);
+
         function getPlaces(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                results.map(result => {
-                    return that.createMarkers(result);
-                });
+                results.map(result => that.createMarkers(result));
                 GoogleMapService.locations = results;
-                that.notifyReady();
             }
         }
-
     }
 }

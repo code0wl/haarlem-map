@@ -1,9 +1,9 @@
 import './component.scss';
 
 export default class FavoriteBar {
-    
     constructor() {
-        this.locationCollection;
+        this.locationCollection = [{
+            name: 'hello world!'
+        }];
     }
-
 } 

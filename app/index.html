@@ -20,10 +20,10 @@
     
     <aside class="favorite-aside">
         <section>
-            <ul class="favorite-bar" data-bind="">
-                 <li>test</li>
-            </ul>    
-        </section>     
+            <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
+                 <li data-bind="text: name"></li>
+            </ul>
+        </section>
     </aside>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPsTfD7kIQaXRZtWqTPL1kPXjrTMQrgLI&libraries=places"></script>
