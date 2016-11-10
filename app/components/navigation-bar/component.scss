@@ -2,12 +2,22 @@
     position: absolute;
     top: 0;
     left: 0;
+    transition: padding 1s; 
     overflow: auto;
     right: 0;
     text-align: right;
     background: #272822;
     a {
         display: block;
+        color: #999;
         padding: 1.25rem;
+        transition: all .1s;
+        &:hover {
+            cursor: pointer;
+        } 
+    }
+
+    &.is-open {
+        padding-right: 400px;
     }
 }

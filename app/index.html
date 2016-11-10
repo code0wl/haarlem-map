@@ -9,8 +9,8 @@
     <main>
         
         <section>
-            <nav class="navigation" data-bind="foreach: nav.navigation">
-                <a class="fa fa-bars" data-bind="text: label"></a>
+            <nav class="navigation" data-bind="click: toggleMenu, foreach: nav.navigation">
+                <a class="fa fa-bars"></a>
             </nav>
         </section>
 

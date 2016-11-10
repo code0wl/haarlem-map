@@ -5,5 +5,7 @@ export default class Navigation {
         this.navigation = [
             { label: 'menu' }
         ];
+        this.domNav = document.querySelector('.favorite-aside');
+        this.menu = document.querySelector('.navigation');
     }
 } 

@@ -1,10 +1,13 @@
 .favorite-aside {
+    width: 400px;
+    transform: translateX(100%);
     background: #272822;
     color: white;
     position: fixed;
     right: 0;
     bottom: 0;
     overflow: auto;
+    transition: all 1s;
     top: 0;
     color: #999;
     .location {
@@ -16,6 +19,9 @@
             cursor: pointer;
             transform: scale(1.02);
         }
+    }
+    &.is-open {
+        transform: translateX(0)
     }
 }
 

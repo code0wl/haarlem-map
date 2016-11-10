@@ -17,6 +17,12 @@ class App {
         this.map.map.setZoom(17);
     }
 
+    toggleMenu() {
+        const open = 'is-open';
+        this.nav.domNav.classList.toggle(open);
+        this.nav.menu.classList.toggle(open);
+    }
+
 }
 
 ko.applyBindings(new App());
