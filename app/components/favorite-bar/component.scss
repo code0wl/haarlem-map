@@ -1,5 +1,5 @@
 .favorite-aside {
-    background: darkcyan;
+    background: #272822;
     color: white;
     position: fixed;
     right: 0;
@@ -7,6 +7,15 @@
     padding: 3rem;
     overflow: auto;
     top: 0;
+    color: #999;
+    .location {
+        transition: all .1s ease-in-out;
+        &:hover {
+            color: white;
+            cursor: pointer;
+            transform: scale(1.02);
+        }
+    }
 }
 
 .favorite-bar {

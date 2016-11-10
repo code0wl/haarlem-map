@@ -10,7 +10,7 @@
         
         <section>
             <nav class="navigation" data-bind="foreach: nav.navigation">
-                <a data-bind="text: label, attr: { href: link }"></a>
+                <a class="fa fa-bars" data-bind="text: label"></a>
             </nav>
         </section>
 
@@ -24,11 +24,10 @@
         <h1 class="logo">My Locations</h1>
         <section>
             <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
-                 <li>
+                 <li class="location">
                      <span class="fa fa-star"></span>
-                     <span data-bind="text: name"></span>
+                     <span data-bind="text: name"> Loading... </span>
                  </li>
-
             </ul>
         </section>
     </aside>
