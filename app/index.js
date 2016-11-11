@@ -2,6 +2,7 @@ import ko from 'knockout';
 import Navigation from './components/navigation-bar/component';
 import GoogleMaps from './components/google-maps/component';
 import FavoriteBar from './components/favorite-bar/component';
+import FilterInput from './components/filter-input/component';
 import { GoogleMapService } from './components/google-maps/map-service';
 import './app.scss';
 
@@ -10,11 +11,13 @@ class App {
         this.nav = new Navigation();
         this.map = new GoogleMaps();
         this.bar = new FavoriteBar();
-        this.bar.locationCollection = GoogleMapService.locations;
+        this.search = new FilterInput();
+        this.query = ko.observable('');
+        this.locations;
     }
 
-    changeZoom() {
-        this.map.map.setZoom(17);
+    get locations() {
+        return this.bar.locationCollection = GoogleMapService.locations;
     }
 
     toggleMenu() {

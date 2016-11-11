@@ -22,6 +22,12 @@
     
     <aside class="favorite-aside">
         <h1 class="logo">My Locations</h1>
+        
+        <div class="filter-component">
+            <span class="fa fa-filter"></span>
+            <input type="search" data-bind="textInput: query" class="filter-input" placeholder="filter results">
+        </div>
+
         <section>
             <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
                  <li class="location">

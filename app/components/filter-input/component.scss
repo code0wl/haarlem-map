@@ -1,0 +1,22 @@
+.filter-component {
+    position: relative;
+    .fa {
+        position: absolute;
+        top: .8rem;
+        left: 1rem;
+    }
+    .filter-input {
+        border: 0;
+        background: #f9f9f9;
+        height: 3rem;
+        box-sizing: border-box;
+        outline: none;
+        margin: -3px;
+        width: 100%;
+        color: #999;
+        padding: 0 0 0 2.4rem;
+        &:focus {
+            color: blue;
+        }
+    }
+}

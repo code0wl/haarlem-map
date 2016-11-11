@@ -2,7 +2,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: padding 1s; 
+    transition: padding .5s ease-in-out;
     overflow: auto;
     right: 0;
     text-align: right;
@@ -14,9 +14,8 @@
         transition: all .1s;
         &:hover {
             cursor: pointer;
-        } 
+        }
     }
-
     &.is-open {
         padding-right: 400px;
     }
