@@ -7,7 +7,7 @@ export default class GoogleMaps {
 
         this.mapSettings = {
             center: haarlem,
-            zoom: 19
+            zoom: 10
         }
 
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
@@ -17,7 +17,7 @@ export default class GoogleMaps {
         this.request = {
             location: haarlem,
             radius: '500',
-            types: ['gym', 'bowling_alley']
+            types: ['restaurants']
         };
         this.markers = [];
         this.render();
@@ -28,18 +28,27 @@ export default class GoogleMaps {
     }
 
     createMarkers(place) {
-        this.markers.push(new google.maps.Marker({
+        const dialog = new google.maps.InfoWindow();
+
+        const marker = new google.maps.Marker({
             title: place.name,
             position: place.geometry.location
-        }));
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+            dialog.setContent(`<div><strong> ${place.name} </strong><br> ${place.vicinity}</div>`);
+            dialog.open(this.map, this);
+        });
+
+        this.markers.push(marker);
 
         this.bounds.extend(place.geometry.location);
         this.map.fitBounds(this.bounds);
+
     }
 
     placeMarkers() {
         this.markers.map(marker => {
-            console.log(marker);
             marker.setMap(this.map);
         });
     }
