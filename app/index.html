@@ -25,14 +25,14 @@
         
         <div class="filter-component">
             <span class="fa fa-filter"></span>
-            <input type="search" data-bind="textInput: query" class="filter-input" placeholder="filter results">
+            <input type="search" data-bind="value: query, valueUpdate: 'keyup'" class="filter-input" placeholder="filter results">
         </div>
 
         <section>
             <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
-                 <li class="location">
+                 <li class="location" data-bind="if: name">
                      <span class="fa fa-star"></span>
-                     <span data-bind="text: name"> Loading... </span>
+                     <span data-bind="text: name"></span>
                  </li>
             </ul>
         </section>

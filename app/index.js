@@ -1,10 +1,10 @@
+import './app.scss';
 import ko from 'knockout';
 import Navigation from './components/navigation-bar/component';
 import GoogleMaps from './components/google-maps/component';
 import FavoriteBar from './components/favorite-bar/component';
 import FilterInput from './components/filter-input/component';
 import { GoogleMapService } from './components/google-maps/map-service';
-import './app.scss';
 
 class App {
     constructor() {
@@ -12,8 +12,34 @@ class App {
         this.map = new GoogleMaps();
         this.bar = new FavoriteBar();
         this.search = new FilterInput();
+
+        this.locations();
+        this.bindSearch();
+    }
+
+    bindSearch(query) {
+        const that = this;
         this.query = ko.observable('');
-        this.locations;
+        this.query.subscribe(query => search(query));
+
+        function search(query) {
+            let matchers;
+            if (query !== '') {
+                matchers = GoogleMapService.locations.map(location => {
+                    const lowerCase = location.name.toLowerCase();
+                    const q = query.toLowerCase();
+                    if (location && lowerCase.includes(q)) {
+                        return location;
+                    } else {
+                        return false;
+                    }
+                }).filter(x => x);
+            } else {
+                matchers = GoogleMapService.locations;
+            }
+            that.bar.locationCollection(matchers);
+        }
+
     }
 
     get locations() {
