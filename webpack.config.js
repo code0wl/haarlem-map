@@ -22,11 +22,11 @@ module.exports = {
             template: './app/index.html'
         }),
 
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
 
     module: {
