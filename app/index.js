@@ -15,6 +15,7 @@ class App {
 
         this.bindSearch();
         this.locations();
+        this.selectLocation = this.selectLocation.bind(this);
     }
 
     bindSearch(query) {
@@ -44,6 +45,11 @@ class App {
 
     get locations() {
         return this.bar.locationCollection = GoogleMapService.locations;
+    }
+
+    selectLocation(location) {
+        this.selectedLocation = location.name;
+        this.map.update([location]);
     }
 
     toggleMenu() {

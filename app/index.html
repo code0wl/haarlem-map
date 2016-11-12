@@ -28,10 +28,10 @@
 
         <section>
             <ul class="favorite-bar" data-bind="foreach: bar.locationCollection">
-                 <li class="location" data-bind="if: name">
-                     <span class="fa fa-star"></span>
-                     <span data-bind="text: name"></span>
-                 </li>
+                <li class="location" data-bind="if: name, click: $parent.selectLocation">
+                    <span class="fa fa-star"></span>
+                    <span data-bind="text: name"></span>
+                </li>
             </ul>
         </section>
     </aside>
