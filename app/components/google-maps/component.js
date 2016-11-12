@@ -1,4 +1,6 @@
 import { GoogleMapService } from './map-service';
+import FourSquareService from '../foursquare/foursquare.service';
+import 'whatwg-fetch';
 import './component.scss';
 
 export default class GoogleMaps {
@@ -8,7 +10,7 @@ export default class GoogleMaps {
         this.mapSettings = {
             center: haarlem,
             zoom: 10
-        }
+        };
 
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
         this.service = new google.maps.places.PlacesService(this.map);
@@ -19,6 +21,8 @@ export default class GoogleMaps {
             radius: '500',
             types: ['restaurants']
         };
+
+        this.fourSquareService = new FourSquareService();
         this.markers = [];
         this.render();
     }
@@ -28,15 +32,23 @@ export default class GoogleMaps {
     }
 
     createMarkers(place) {
+        const locale = place.geometry.location;
+        const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name.trim()}`;
         const dialog = new google.maps.InfoWindow();
+        const marker = new google.maps.Marker({ position: place.geometry.location });
+        let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div>`
 
-        const marker = new google.maps.Marker({
-            title: place.name,
-            position: place.geometry.location
-        });
+        fetch(search)
+            .then(function (response) {
+                return response.json()
+            }).then(function (body) {
+                if (body.response.venues[0].beenHere) {
+                    content += `<span class="icon fa fa-foursquare"></span> <br> <p> <strong> Been here:</strong> ${body.response.venues[0].beenHere.marked}</p>`;
+                }
+            });
 
         google.maps.event.addListener(marker, 'click', function () {
-            dialog.setContent(`<div><strong> ${place.name} </strong><br> ${place.vicinity}</div>`);
+            dialog.setContent(content);
             dialog.open(this.map, this);
         });
 
