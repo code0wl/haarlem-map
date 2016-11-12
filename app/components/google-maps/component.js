@@ -12,14 +12,15 @@ export default class GoogleMaps {
 
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
         this.service = new google.maps.places.PlacesService(this.map);
+        this.bounds = new google.maps.LatLngBounds();
 
         this.request = {
             location: haarlem,
-            radius: '5000',
+            radius: '500',
             types: ['gym', 'bowling_alley']
         };
-        this.render();
         this.markers = [];
+        this.render();
     }
 
     update(filtered) {
@@ -27,25 +28,38 @@ export default class GoogleMaps {
     }
 
     createMarkers(place) {
-        const bounds = new google.maps.LatLngBounds();
-
-        const marker = new google.maps.Marker({
-            map: this.map,
+        this.markers.push(new google.maps.Marker({
             title: place.name,
             position: place.geometry.location
-        });
+        }));
 
-        bounds.extend(place.geometry.location);
-        this.map.fitBounds(bounds);
+        this.bounds.extend(place.geometry.location);
+        this.map.fitBounds(this.bounds);
+    }
+
+    placeMarkers() {
+        this.markers.map(marker => {
+            console.log(marker);
+            marker.setMap(this.map);
+        });
+    }
+
+    clearMarkers() {
+        this.markers.map(marker => {
+            marker.setMap(null);
+        });
+        this.markers = [];
     }
 
     render(filteredLocations) {
+        this.clearMarkers();
         const that = this;
         let getPlaces;
 
         if (filteredLocations) {
             getPlaces = function getPlaces(places) {
                 places.map(result => that.createMarkers(result));
+                that.placeMarkers();
             }
             getPlaces(filteredLocations);
         } else {
@@ -55,9 +69,9 @@ export default class GoogleMaps {
                     GoogleMapService.locations(results);
                     GoogleMapService.locationCache = results;
                 }
+                that.placeMarkers();
             }
             this.service.nearbySearch(this.request, getPlaces);
         }
-
     }
 }

@@ -34,11 +34,11 @@ class App {
                         return false;
                     }
                 }).filter(x => x);
-                that.map.update(matchers);
             } else {
                 matchers = GoogleMapService.locationCache;
             }
             that.bar.locationCollection(matchers);
+            that.map.update(matchers);
         }
     }
 
