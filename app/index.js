@@ -13,8 +13,8 @@ class App {
         this.bar = new FavoriteBar();
         this.search = new FilterInput();
 
-        this.locations();
         this.bindSearch();
+        this.locations();
     }
 
     bindSearch(query) {
@@ -25,7 +25,7 @@ class App {
         function search(query) {
             let matchers;
             if (query !== '') {
-                matchers = GoogleMapService.locations.map(location => {
+                matchers = GoogleMapService.locationCache.map(location => {
                     const lowerCase = location.name.toLowerCase();
                     const q = query.toLowerCase();
                     if (location && lowerCase.includes(q)) {
@@ -34,12 +34,12 @@ class App {
                         return false;
                     }
                 }).filter(x => x);
+                that.map.update(matchers);
             } else {
-                matchers = GoogleMapService.locations;
+                matchers = GoogleMapService.locationCache;
             }
             that.bar.locationCollection(matchers);
         }
-
     }
 
     get locations() {

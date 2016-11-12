@@ -7,7 +7,7 @@ export default class GoogleMaps {
 
         this.mapSettings = {
             center: haarlem,
-            zoom: 12
+            zoom: 19
         }
 
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
@@ -19,6 +19,11 @@ export default class GoogleMaps {
             types: ['gym', 'bowling_alley']
         };
         this.render();
+        this.markers = [];
+    }
+
+    update(filtered) {
+        this.render(filtered);
     }
 
     createMarkers(place) {
@@ -30,21 +35,29 @@ export default class GoogleMaps {
             position: place.geometry.location
         });
 
-        GoogleMapService.saveLocation(place);
         bounds.extend(place.geometry.location);
         this.map.fitBounds(bounds);
     }
 
-    render() {
+    render(filteredLocations) {
         const that = this;
-        this.service.nearbySearch(this.request, getPlaces);
+        let getPlaces;
 
-        function getPlaces(results, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                results.map(result => that.createMarkers(result));
-                GoogleMapService.locations = results;
-                console.log(GoogleMapService.locations);
+        if (filteredLocations) {
+            getPlaces = function getPlaces(places) {
+                places.map(result => that.createMarkers(result));
             }
+            getPlaces(filteredLocations);
+        } else {
+            getPlaces = function getPlaces(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    results.map(result => that.createMarkers(result));
+                    GoogleMapService.locations(results);
+                    GoogleMapService.locationCache = results;
+                }
+            }
+            this.service.nearbySearch(this.request, getPlaces);
         }
+
     }
 }
