@@ -18,8 +18,8 @@ export default class GoogleMaps {
 
         this.request = {
             location: haarlem,
-            radius: '500',
-            types: ['restaurants']
+            radius: '1500',
+            types: ['restaurants', 'gym', 'bowling']
         };
 
         this.fourSquareService = new FourSquareService();
@@ -33,7 +33,7 @@ export default class GoogleMaps {
 
     createMarkers(place) {
         const locale = place.geometry.location;
-        const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name.trim()}`;
+        const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name}`;
         const dialog = new google.maps.InfoWindow();
         const marker = new google.maps.Marker({ position: place.geometry.location });
         let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div>`
@@ -42,8 +42,9 @@ export default class GoogleMaps {
             .then(function (response) {
                 return response.json()
             }).then(function (body) {
-                if (body.response.venues[0].beenHere) {
-                    content += `<span class="icon fa fa-foursquare"></span> <br> <p> <strong> Been here:</strong> ${body.response.venues[0].beenHere.marked}</p>`;
+                if (body.response.venues[0]) {
+                    console.log(body.response);
+                    content += `<p> <span class="icon fa fa-foursquare"></span>  <strong> Total Checkins: </strong> ${body.response.venues[0].stats.checkinsCount}</p>`;
                 }
             });
 

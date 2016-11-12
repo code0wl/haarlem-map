@@ -4,6 +4,7 @@ A fun little experiment to try out knockout js in a es6+ environment
 
 ## Documentation
 The neighborhood project is a simple database project completed for Udacity's full-stack nanodegree program program. The project demostrates usage of CRUD techniques to talk to a database while implementing useful features with knockout js
+You can search some areas around Haarlem and see how many people have been there using FourSquare.
 
 1. Download or clone files
 1. Navigate to the project folder
