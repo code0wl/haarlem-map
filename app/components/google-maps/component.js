@@ -43,7 +43,6 @@ export default class GoogleMaps {
                 return response.json()
             }).then(function (body) {
                 if (body.response.venues[0]) {
-                    console.log(body.response);
                     content += `<p> <span class="icon fa fa-foursquare"></span>  <strong> Total Checkins: </strong> ${body.response.venues[0].stats.checkinsCount}</p>`;
                 }
             });

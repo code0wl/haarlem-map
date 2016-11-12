@@ -20,6 +20,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Neighborhood map',
             template: './app/index.html'
+        }),
+
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
         })
     ],
 
