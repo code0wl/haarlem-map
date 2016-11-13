@@ -3,6 +3,7 @@ import FourSquareService from '../foursquare/foursquare.service';
 import 'whatwg-fetch';
 import './component.scss';
 
+
 export default class GoogleMaps {
     constructor() {
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
@@ -24,6 +25,8 @@ export default class GoogleMaps {
 
         this.fourSquareService = new FourSquareService();
         this.markers = [];
+        this.dialogs = [];
+        this.contents = [];
         this.render();
     }
 
@@ -33,24 +36,34 @@ export default class GoogleMaps {
 
     displayLocation(location) {
         const currentLocation = location[0];
-
         this.markers.map((marker, index) => {
             if (marker.name === currentLocation.name) {
-                marker.setMap(null);
-                this.markers.splice(index, 1);
+                this.toggleSelected(marker, this.dialogs[index], this.contents[index]);
             }
         });
-
-        location.map(result => this.createMarkers(result, true));
         this.placeMarkers(location);
     }
 
-    createMarkers(place, openWindow) {
+    toggleSelected(marker, dialog, content) {
+        if (marker.getAnimation() !== null) {
+            dialog.close(this.map, marker);
+            marker.setAnimation(null);
+        } else {
+            dialog.open(this.map, marker);
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+        dialog.setContent(content);
+    }
+
+    createMarkers(place) {
+        const that = this;
         const locale = place.geometry.location;
         const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name}`;
         const dialog = new google.maps.InfoWindow();
         const marker = new google.maps.Marker({ position: place.geometry.location, animation: google.maps.Animation.DROP, name: place.name });
         let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div> <p> <span class="icon fa fa-foursquare"></span>`;
+        this.markers.push(marker);
+        this.dialogs.push(dialog);
 
         this.fourSquareService
             .requestLocation(search)
@@ -60,25 +73,19 @@ export default class GoogleMaps {
                 } else {
                     content += `<strong> No FourSquare information found on location</strong> </p>`;
                 }
-                return content;
+                this.contents.push(content);
             })
             .then(() => {
-                google.maps.event.addListener(marker, 'click', function () {
-                    dialog.setContent(content);
-                    dialog.open(this.map, this);
+                marker.addListener('click', function () {
+                    that.toggleSelected(marker, dialog, content);
                 });
-
-                if (openWindow) {
-                    dialog.setContent(content);
-                    dialog.open(this.map, marker);
-                }
+            })
+            .catch(e => {
+                alert('content could not have been retrieved from foursquare at this moment');
             });
-
-        this.markers.push(marker);
 
         this.bounds.extend(place.geometry.location);
         this.map.fitBounds(this.bounds);
-
     }
 
     placeMarkers(location) {
@@ -96,9 +103,7 @@ export default class GoogleMaps {
     }
 
     clearMarkers() {
-        this.markers.map(marker => {
-            marker.setMap(null);
-        });
+        this.markers.map(marker => marker.setMap(null));
         this.markers = [];
     }
 

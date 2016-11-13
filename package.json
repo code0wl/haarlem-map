@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "font-awesome": "^4.7.0",
+    "google-maps": "^3.2.1",
     "knockout": "^3.4.0",
     "whatwg-fetch": "^1.0.0"
   },
