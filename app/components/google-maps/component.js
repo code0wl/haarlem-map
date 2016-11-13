@@ -49,7 +49,7 @@ export default class GoogleMaps {
             marker.setAnimation(null);
         } else {
             dialog.open(this.map, marker);
-            marker.setAnimation(google.maps.Animation.BOUNCE);
+            marker.setAnimation(4);
         }
         dialog.setContent(content);
     }
