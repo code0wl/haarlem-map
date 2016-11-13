@@ -128,6 +128,8 @@ export default class GoogleMaps {
                     results.map(result => that.createMarkers(result));
                     GoogleMapService.locations(results);
                     GoogleMapService.locationCache = results;
+                } else {
+                    alert('Our apologies, but no locations could be found');
                 }
                 that.placeMarkers();
             }
