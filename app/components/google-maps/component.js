@@ -3,7 +3,6 @@ import FourSquareService from '../foursquare/foursquare.service';
 import 'whatwg-fetch';
 import './component.scss';
 
-
 export default class GoogleMaps {
     constructor() {
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
@@ -12,7 +11,7 @@ export default class GoogleMaps {
             center: haarlem,
             zoom: 10
         };
-
+ 
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
         this.service = new google.maps.places.PlacesService(this.map);
         this.bounds = new google.maps.LatLngBounds();

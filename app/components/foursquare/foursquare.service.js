@@ -6,7 +6,7 @@ export default class FourSquareService {
     }
 
     requestLocation(search) {
-        var promise = new Promise(resolver)
+        const promise = new Promise(resolver)
 
         function resolver(resolve, reject) {
             resolve(fetch(search).then(response => response.json()));
