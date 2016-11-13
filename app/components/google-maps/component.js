@@ -41,31 +41,38 @@ export default class GoogleMaps {
             }
         });
 
-        location.map(result => this.createMarkers(result));
+        location.map(result => this.createMarkers(result, true));
         this.placeMarkers(location);
     }
 
-    createMarkers(place) {
+    createMarkers(place, openWindow) {
         const locale = place.geometry.location;
         const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name}`;
         const dialog = new google.maps.InfoWindow();
         const marker = new google.maps.Marker({ position: place.geometry.location, animation: google.maps.Animation.DROP, name: place.name });
+        let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div> <p> <span class="icon fa fa-foursquare"></span>`;
 
-        let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div>`
         this.fourSquareService
             .requestLocation(search)
             .then(body => {
                 if (body.response.venues[0]) {
-                    content += `<p> <span class="icon fa fa-foursquare"></span>  <strong> Total Checkins: </strong> ${body.response.venues[0].stats.checkinsCount}</p>`;
+                    content += `<strong> Total Checkins: </strong> ${body.response.venues[0].stats.checkinsCount}</p>`;
                 } else {
-                    content += `<p> <span class="icon fa fa-foursquare"></span>  <strong> No FourSquare information found on location</strong> </p>`;
+                    content += `<strong> No FourSquare information found on location</strong> </p>`;
+                }
+                return content;
+            })
+            .then(() => {
+                google.maps.event.addListener(marker, 'click', function () {
+                    dialog.setContent(content);
+                    dialog.open(this.map, this);
+                });
+
+                if (openWindow) {
+                    dialog.setContent(content);
+                    dialog.open(this.map, marker);
                 }
             });
-
-        google.maps.event.addListener(marker, 'click', function () {
-            dialog.setContent(content);
-            dialog.open(this.map, this);
-        });
 
         this.markers.push(marker);
 

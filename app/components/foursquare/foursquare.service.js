@@ -10,6 +10,7 @@ export default class FourSquareService {
 
         function resolver(resolve, reject) {
             resolve(fetch(search).then(response => response.json()));
+            reject(e => console.error(e));
         }
 
         return promise;

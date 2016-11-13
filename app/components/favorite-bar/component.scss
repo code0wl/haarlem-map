@@ -1,8 +1,9 @@
 .favorite-aside {
-    width: 400px;
+    width: 300px;
     transform: translateX(100%);
     background: #272822;
     color: white;
+    overflow: hidden;
     position: fixed;
     right: 0;
     bottom: 0;
