@@ -18,8 +18,8 @@ export default class GoogleMaps {
 
         this.request = {
             location: haarlem,
-            radius: '1500',
-            types: ['restaurants', 'gym', 'bowling']
+            radius: '2000',
+            types: ['restaurants', 'bowling']
         };
 
         this.fourSquareService = new FourSquareService();
