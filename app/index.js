@@ -48,8 +48,7 @@ class App {
     }
 
     selectLocation(location) {
-        this.selectedLocation = location.name;
-        this.map.update([location]);
+        this.map.displayLocation([location]);
     }
 
     toggleMenu() {

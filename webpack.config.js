@@ -17,16 +17,17 @@ module.exports = {
     },
 
     plugins: [
+
         new HtmlWebpackPlugin({
             title: 'Neighborhood map',
             template: './app/index.html'
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
 
     module: {
@@ -39,6 +40,7 @@ module.exports = {
                     presets: ['es2015']
                 }
             },
+
             {
                 test: /\.scss$/,
                 loaders: ['style', 'css', 'sass']
