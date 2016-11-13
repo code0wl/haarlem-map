@@ -4,7 +4,7 @@ import Navigation from './components/navigation-bar/component';
 import GoogleMaps from './components/google-maps/component';
 import FavoriteBar from './components/favorite-bar/component';
 import FilterInput from './components/filter-input/component';
-import { GoogleMapService } from './components/google-maps/map-service';
+import { GoogleMapService, google } from './components/google-maps/map-service';
 
 class App {
     constructor() {
@@ -59,4 +59,6 @@ class App {
 
 }
 
-ko.applyBindings(new App());
+window.bootstrapApplication = () => {
+    ko.applyBindings(new App());
+};
