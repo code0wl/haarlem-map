@@ -33,12 +33,13 @@ export default class GoogleMaps {
         this.render(filtered);
     }
 
-    displayLocation(location) {
+    displayLocation(location) { 
         const currentLocation = location[0];
         this.markers.map((marker, index) => {
             if (marker.name === currentLocation.name) {
-                console.log(marker.name, currentLocation.name);
                 this.toggleSelected(marker, this.dialogs[index], this.contents[index]);
+            } else {
+                marker.setAnimation(null);
             }
         });
     }

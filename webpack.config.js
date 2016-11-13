@@ -23,11 +23,11 @@ module.exports = {
             inject: 'head'
         }),
 
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
 
     module: {
