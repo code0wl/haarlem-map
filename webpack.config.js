@@ -17,17 +17,17 @@ module.exports = {
     },
 
     plugins: [
-
         new HtmlWebpackPlugin({
             title: 'Neighborhood map',
-            template: './app/index.html'
+            template: './app/index.html',
+            inject: 'head'
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
 
     module: {

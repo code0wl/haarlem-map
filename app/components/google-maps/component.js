@@ -11,15 +11,15 @@ export default class GoogleMaps {
             center: haarlem,
             zoom: 10
         };
- 
+
         this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
         this.service = new google.maps.places.PlacesService(this.map);
         this.bounds = new google.maps.LatLngBounds();
 
         this.request = {
             location: haarlem,
-            radius: '2000',
-            types: ['restaurants', 'bowling']
+            radius: '1500',
+            types: ['gym']
         };
 
         this.fourSquareService = new FourSquareService();
@@ -37,10 +37,10 @@ export default class GoogleMaps {
         const currentLocation = location[0];
         this.markers.map((marker, index) => {
             if (marker.name === currentLocation.name) {
+                console.log(marker.name, currentLocation.name);
                 this.toggleSelected(marker, this.dialogs[index], this.contents[index]);
             }
         });
-        this.placeMarkers(location);
     }
 
     toggleSelected(marker, dialog, content) {
@@ -61,8 +61,6 @@ export default class GoogleMaps {
         const dialog = new google.maps.InfoWindow();
         const marker = new google.maps.Marker({ position: place.geometry.location, animation: google.maps.Animation.DROP, name: place.name });
         let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div> <p> <span class="icon fa fa-foursquare"></span>`;
-        this.markers.push(marker);
-        this.dialogs.push(dialog);
 
         this.fourSquareService
             .requestLocation(search)
@@ -72,7 +70,6 @@ export default class GoogleMaps {
                 } else {
                     content += `<strong> No FourSquare information found on location</strong> </p>`;
                 }
-                this.contents.push(content);
             })
             .then(() => {
                 marker.addListener('click', function () {
@@ -88,40 +85,38 @@ export default class GoogleMaps {
                 alert('content could not have been retrieved from foursquare at this moment');
             });
 
+        that.contents.push(content);
+        that.markers.push(marker);
+        that.dialogs.push(dialog);
+
         this.bounds.extend(place.geometry.location);
         this.map.fitBounds(this.bounds);
     }
 
-    placeMarkers(location) {
-        if (!location) {
-            this.markers.map(marker => {
-                marker.setMap(this.map);
-            });
-        } else {
-            this.markers.map(marker => {
-                if (marker.name === location[0].name) {
-                    marker.setMap(this.map);
-                }
-            });
-        }
+    placeMarkers() {
+        this.markers.map(marker => {
+            marker.setMap(this.map);
+        });
     }
 
-    clearMarkers() {
-        this.markers.map(marker => marker.setMap(null));
-        this.markers = [];
+    updateMarkers(filteredLocations) {
+        this.markers.map((marker, index) => {
+            marker.setMap(null);
+            filteredLocations.map(location => {
+                if (location.name === marker.name) {
+                    return marker.setMap(this.map);
+                }
+            });
+
+        });
     }
 
     render(filteredLocations) {
-        this.clearMarkers();
         const that = this;
         let getPlaces;
 
         if (filteredLocations) {
-            getPlaces = function getPlaces(places) {
-                places.map(result => that.createMarkers(result));
-                that.placeMarkers();
-            }
-            getPlaces(filteredLocations);
+            this.updateMarkers(filteredLocations);
         } else {
             getPlaces = function getPlaces(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
