@@ -78,6 +78,11 @@ export default class GoogleMaps {
                 marker.addListener('click', function () {
                     that.toggleSelected(marker, dialog, content);
                 });
+
+                dialog.addListener('closeclick', function () {
+                    that.toggleSelected(marker, dialog, content);
+                })
+
             })
             .catch(e => {
                 alert('content could not have been retrieved from foursquare at this moment');
