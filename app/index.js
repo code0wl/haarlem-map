@@ -60,5 +60,9 @@ class App {
 }
 
 window.bootstrapApplication = () => {
-    ko.applyBindings(new App());
+    try {
+        ko.applyBindings(new App());
+    } catch (e) {
+        alert('something went wrong' , e);
+    }
 };

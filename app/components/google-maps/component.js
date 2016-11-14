@@ -130,7 +130,7 @@ export default class GoogleMaps {
                     GoogleMapService.locations(results);
                     GoogleMapService.locationCache = results;
                 } else {
-                    console.error('Places could not have been retrieved');
+                    alert('Places could not have been retrieved');
                 }
                 that.placeMarkers();
             }
