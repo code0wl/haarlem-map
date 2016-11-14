@@ -63,7 +63,6 @@ export default class GoogleMaps {
         const locale = place.geometry.location;
         const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name}`;
         const dialog = new google.maps.InfoWindow();
-        dialog.name = place.name;
         const marker = new google.maps.Marker({ position: place.geometry.location, animation: google.maps.Animation.DROP, name: place.name });
         let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div> <p> <span class="icon fa fa-foursquare"></span>`;
 
