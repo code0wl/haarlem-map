@@ -19,7 +19,7 @@ export default class GoogleMaps {
         this.request = {
             location: haarlem,
             radius: '1500',
-            types: ['gym']
+            types: ['restaurants']
         };
 
         this.fourSquareService = new FourSquareService();
@@ -33,18 +33,22 @@ export default class GoogleMaps {
         this.render(filtered);
     }
 
-    displayLocation(location) { 
+    displayLocation(location) {
         const currentLocation = location[0];
         this.markers.map((marker, index) => {
             if (marker.name === currentLocation.name) {
                 this.toggleSelected(marker, this.dialogs[index], this.contents[index]);
-            } else {
-                marker.setAnimation(null);
             }
         });
     }
 
     toggleSelected(marker, dialog, content) {
+        this.markers.map(mark => {
+            if (marker.name !== mark.name) {
+                mark.setAnimation(null);
+            };
+        });
+
         if (marker.getAnimation() !== null) {
             dialog.close(this.map, marker);
             marker.setAnimation(null);
@@ -71,6 +75,7 @@ export default class GoogleMaps {
                 } else {
                     content += `<strong> No FourSquare information found on location</strong> </p>`;
                 }
+                that.contents.push(content);
             })
             .then(() => {
                 marker.addListener('click', function () {
@@ -78,7 +83,8 @@ export default class GoogleMaps {
                 });
 
                 dialog.addListener('closeclick', function () {
-                    that.toggleSelected(marker, dialog, content);
+                    marker.setAnimation(null);
+                    dialog.close(this.map, marker);
                 })
 
             })
@@ -86,7 +92,6 @@ export default class GoogleMaps {
                 alert('content could not have been retrieved from foursquare at this moment');
             });
 
-        that.contents.push(content);
         that.markers.push(marker);
         that.dialogs.push(dialog);
 
@@ -125,7 +130,7 @@ export default class GoogleMaps {
                     GoogleMapService.locations(results);
                     GoogleMapService.locationCache = results;
                 } else {
-                    alert('Our apologies, but no locations could be found');
+                    console.error('Places could not have been retrieved');
                 }
                 that.placeMarkers();
             }
