@@ -63,6 +63,10 @@ window.bootstrapApplication = () => {
     try {
         ko.applyBindings(new App());
     } catch (e) {
-        alert('something went wrong' , e);
+        alert('something went wrong', e);
     }
 };
+
+window.googleMapsError = () => {
+    alert('google maps could not be loaded at this time');
+}

@@ -7,12 +7,7 @@ export default class GoogleMaps {
     constructor() {
         const haarlem = new google.maps.LatLng(52.387388, 4.646219);
 
-        this.mapSettings = {
-            center: haarlem,
-            zoom: 10
-        };
-
-        this.map = new google.maps.Map(document.getElementById('map'), this.mapSettings);
+        this.map = new google.maps.Map(document.getElementById('map'), { center: haarlem, zoom: 10 });
         this.service = new google.maps.places.PlacesService(this.map);
         this.bounds = new google.maps.LatLngBounds();
 
@@ -49,6 +44,10 @@ export default class GoogleMaps {
             };
         });
 
+        this.dialogs.map(dialog => {
+            dialog.close(this.map, marker);
+        });
+
         if (marker.getAnimation() !== null) {
             dialog.close(this.map, marker);
             marker.setAnimation(null);
@@ -64,6 +63,7 @@ export default class GoogleMaps {
         const locale = place.geometry.location;
         const search = `${this.fourSquareService.url}=${this.fourSquareService.id}&client_secret=${this.fourSquareService.secret}&v=20130815&ll=${locale.lat()},${locale.lng()}&query=${place.name}`;
         const dialog = new google.maps.InfoWindow();
+        dialog.name = place.name;
         const marker = new google.maps.Marker({ position: place.geometry.location, animation: google.maps.Animation.DROP, name: place.name });
         let content = `<div><strong> ${place.name} </strong><br> ${place.vicinity}</div> <p> <span class="icon fa fa-foursquare"></span>`;
 
@@ -107,10 +107,10 @@ export default class GoogleMaps {
 
     updateMarkers(filteredLocations) {
         this.markers.map((marker, index) => {
-            marker.setMap(null);
+            marker.setVisible(false);
             filteredLocations.map(location => {
                 if (location.name === marker.name) {
-                    return marker.setMap(this.map);
+                    return marker.setVisible(true);
                 }
             });
 
